@@ -1,0 +1,105 @@
+Practical 5: N-Queens using Backtracking
+
+
+
+def safe(b, r, c, n):
+    for i in range(r):
+        for j in range(n):
+            if b[i][j] and (j == c or abs(i-r) == abs(j-c)):
+                return False
+    return True
+
+def solve(b, r, n):
+    if r == n:
+        return True
+    if any(b[r]):
+        return solve(b, r+1, n)
+
+    for c in range(n):
+        if safe(b, r, c, n):
+            b[r][c] = 1
+            if solve(b, r+1, n):
+                return True
+            b[r][c] = 0
+    return False
+
+n = int(input("Enter value of N: "))
+r = int(input("Enter first Queen row (1 to N): ")) - 1
+c = int(input("Enter first Queen column (1 to N): ")) - 1
+
+if n <= 0 or not (0 <= r < n and 0 <= c < n):
+    print("Invalid input")
+else:
+    b = [[0]*n for _ in range(n)]
+    b[r][c] = 1
+    if solve(b, 0, n):
+        print("Final N-Queens Matrix:")
+        for row in b:
+            print(row)
+    else:
+        print("No solution exists.")
+
+
+
+
+Explanation
+Aim: To place N queens on an N × N chessboard using backtracking, with the first queen already placed.
+
+What is the N-Queens problem?
+
+We must place N queens on a chessboard so that no two queens attack each other.
+
+What is backtracking?
+
+Backtracking means trying a position and, if it does not lead to a solution, undoing that choice and trying another position.
+Basic concepts required
+- Matrix: A collection of rows and columns.
+- Queen: A chess piece that attacks horizontally, vertically and diagonally.
+- Recursion: A function calling itself.
+- Backtracking: Removing a queen when a placement fails.
+- True and False: Represent success and failure.
+Code explanation
+Code	Meaning
+def safe(b, r, c, n):	Checks whether a queen can be placed safely.
+for i in range(r):	Checks the previous rows.
+for j in range(n):	Checks every column in those rows.
+if b[i][j]	Checks whether a queen exists at that position.
+j == c	Checks whether two queens share a column.
+abs(i-r) == abs(j-c)	Checks whether two queens share a diagonal.
+return False	Indicates an unsafe position.
+return True	Indicates a safe position.
+def solve(b, r, n):	Attempts to solve the board starting from row r.
+if r == n:	Checks whether all rows have been processed.
+if any(b[r]):	Checks whether the current row already contains a queen.
+for c in range(n):	Tries each column in the current row.
+b[r][c] = 1	Places a queen.
+if solve(b, r+1, n):	Recursively tries to place the remaining queens.
+b[r][c] = 0	Removes the queen when the placement fails. This is backtracking.
+b = [[0]*n for _ in range(n)]	Creates an N × N matrix filled with zeros.
+b[r][c] = 1	Places the first queen at the given position.
+print(row)	Displays each row of the solution.
+
+Sample output
+Enter value of N: 4
+Enter first Queen row (1 to N): 1
+Enter first Queen column (1 to N): 2
+Final N-Queens Matrix:
+[0, 1, 0, 0]
+[0, 0, 0, 1]
+[1, 0, 0, 0]
+[0, 0, 1, 0]
+
+
+Here, 1 represents a queen and 0 represents an empty cell.
+Complexity
+- Time complexity: O(N!) as a commonly used upper bound.
+- Space complexity: O(N^2)for the matrix, plus recursion stack space.
+Important points to remember
+1. N-Queens uses Backtracking.
+2. No two queens can share a column or diagonal.
+3. The first queen is placed before calling solve().
+4. b[r][c] = 1 places a queen.
+5. b[r][c] = 0 removes a queen when backtracking is needed.
+Viva question: Why do we use backtracking in the N-Queens problem?
+
+Answer: We use backtracking to try different queen positions, check whether they are safe, and remove a queen if its placement prevents a valid solution.

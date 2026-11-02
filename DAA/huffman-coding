@@ -1,0 +1,125 @@
+Practical 2: Huffman Encoding using Greedy Strategy
+
+
+import heapq
+from collections import Counter
+
+class Node:
+    def __init__(self, char, freq):
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
+
+    def __lt__(self, other):
+        return self.freq < other.freq
+
+def huffman_encoding(text):
+    if not text:
+        return {}, ""
+
+    frequency = Counter(text)
+    heap = []
+
+    for char, freq in frequency.items():
+        heapq.heappush(heap, Node(char, freq))
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+
+        new_node = Node(None, left.freq + right.freq)
+        new_node.left = left
+        new_node.right = right
+
+        heapq.heappush(heap, new_node)
+
+    root = heap[0]
+    codes = {}
+
+    def generate_codes(node, code=""):
+        if node.char is not None:
+            codes[node.char] = code or "0"
+            return
+
+        generate_codes(node.left, code + "0")
+        generate_codes(node.right, code + "1")
+
+    generate_codes(root)
+
+    encoded = ""
+    for char in text:
+        encoded += codes[char]
+
+    return codes, encoded
+
+text = input("Enter a string: ")
+codes, encoded = huffman_encoding(text)
+
+print("\nHuffman Codes:")
+for char, code in codes.items():
+    print(char, ":", code)
+
+print("\nEncoded String:")
+print(encoded)
+
+
+Explanation
+Aim: To implement Huffman Encoding using a greedy strategy.
+
+What is Huffman Encoding?
+
+It is a data compression technique that assigns binary codes (0 and 1) to characters according to their frequency.
+
+What is the Greedy method?
+
+It chooses the best available option at each step. In this program, it combines the two nodes with the smallest frequencies first.
+Basic concepts required
+- Class: A blueprint for creating objects.
+- Object: An instance of a class.
+- Frequency: The number of times a character occurs.
+- Min-heap: A structure that allows us to remove the smallest-frequency node first.
+- Tree: A structure containing parent and child nodes.
+- Recursion: A function calling itself.
+Code explanation
+Code	Meaning
+import heapq	Imports heap operations.
+Counter(text)	Counts each character's frequency.
+class Node:	Creates the structure for a tree node.
+__init__(self, char, freq)	Stores character and frequency.
+self.left = None	Initially, no left child exists.
+self.right = None	Initially, no right child exists.
+__lt__(self, other)	Compares nodes using frequency.
+heapq.heappush()	Adds a node to the heap.
+heapq.heappop()	Removes the smallest-frequency node.
+Node(None, left.freq + right.freq)	Combines two nodes into a parent node.
+generate_codes()	Generates binary codes by traversing the tree.
+code + "0"	Adds 0 for the left branch.
+code + "1"	Adds 1 for the right branch.
+codes[char]	Retrieves the code assigned to a character.
+return codes, encoded	Returns the codes and encoded string.
+
+Sample output
+For input hello, the output may look like this:
+Enter a string: hello
+
+Huffman Codes:
+h : 00
+e : 01
+l : 1
+o : 10
+
+Encoded String:
+00011110
+
+
+The exact codes can vary when frequencies are tied.
+Complexity
+- Time complexity: O(n+k 	log k), where n is the string length and k is the number of distinct characters.
+- Space complexity: O(k) for the tree and code table, excluding the encoded output.
+Remember these five things for your viva
+1. Huffman Encoding uses a Greedy algorithm.
+2. Counter counts character frequencies.
+3. heapq helps select the two smallest frequencies.
+4. The left branch gets 0, and the right branch gets 1.
+5. The final encoded string replaces each character with its binary code.

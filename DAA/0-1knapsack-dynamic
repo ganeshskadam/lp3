@@ -1,0 +1,76 @@
+Practical 4: 0/1 Knapsack using Dynamic Programming
+
+
+n = int(input("Enter number of items: "))
+weight, profit = [], []
+
+for i in range(n):
+    weight.append(int(input("Enter weight: ")))
+    profit.append(int(input("Enter profit: ")))
+
+W = int(input("Enter knapsack capacity: "))
+dp = [0] * (W + 1)
+
+for i in range(n):
+    for w in range(W, weight[i]-1, -1):
+        dp[w] = max(dp[w], profit[i] + dp[w-weight[i]])
+
+print("Maximum Profit =", dp[W])
+
+Explanation
+Aim: To solve the 0/1 Knapsack problem using Dynamic Programming.
+
+What is 0/1 Knapsack?
+
+It is a problem where we select items to get maximum profit without exceeding the bag's capacity. Each item can be selected only once: either take the whole item (1) or do not take it (0).
+
+What is Dynamic Programming?
+
+Dynamic Programming solves a problem by storing results of smaller subproblems and reusing them to avoid repeated calculations.
+Basic concepts required
+- Weight: How heavy an item is.
+- Profit: The value earned by selecting an item.
+- Capacity (W): Maximum weight the bag can hold.
+- DP array: Stores the maximum profit possible for different capacities.
+- max(): Returns the larger of two values.
+Code explanation
+Code	Meaning
+n = int(input(...))	Accepts the number of items.
+weight, profit = [], []	Creates two empty lists.
+weight.append(...)	Stores each item's weight.
+profit.append(...)	Stores each item's profit.
+W = int(input(...))	Accepts the knapsack capacity.
+dp = [0] * (W + 1)	Creates a DP array filled with zeros.
+for i in range(n):	Processes each item.
+for w in range(W, weight[i]-1, -1):	Checks capacities from largest to smallest.
+profit[i] + dp[w-weight[i]]	Calculates profit if the item is selected.
+max(dp[w], ...)	Chooses between selecting and skipping the item.
+print("Maximum Profit =", dp[W])	Displays the maximum profit for capacity W.
+
+Sample output
+Enter number of items: 4
+Enter weight: 3
+Enter profit: 5
+Enter weight: 2
+Enter profit: 6
+Enter weight: 8
+Enter profit: 3
+Enter weight: 4
+Enter profit: 3
+Enter knapsack capacity: 6
+Maximum Profit = 9
+
+
+Complexity
+- Time complexity: O(nW)
+- Space complexity: O(W)
+Here, n is the number of items and W is the knapsack capacity.
+Important points to remember
+1. 0/1 Knapsack uses Dynamic Programming.
+2. Each item can be selected only once.
+3. dp[w] stores the maximum profit for capacity w.
+4. max() compares taking the item versus skipping it.
+5. The inner loop runs backwards to prevent using the same item multiple times.
+Viva question: Why does the capacity loop run backwards?
+
+Answer: It runs backwards to ensure that each item is used at most once, as required by the 0/1 Knapsack problem.

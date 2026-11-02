@@ -1,0 +1,79 @@
+Practical 3: Fractional Knapsack using Greedy Method
+
+
+n = int(input("Enter number of items: "))
+items = []
+
+for i in range(n):
+    w = float(input("Enter weight: "))
+    v = float(input("Enter value: "))
+    items.append((v/w, w, v))
+
+capacity = float(input("Enter knapsack capacity: "))
+total = 0
+
+for r, w, v in sorted(items, reverse=True):
+    take = min(w, capacity)
+    total += r * take
+    capacity -= take
+    if capacity <= 0:
+        break
+
+print("Maximum value =", total)
+
+
+Explanation
+Aim: To solve the Fractional Knapsack problem using a Greedy method.
+
+What is Fractional Knapsack?
+
+It is a problem in which we select items to get the maximum total value within a given weight capacity. We can take a whole item or a fraction of an item.
+
+What is the Greedy method?
+
+It selects the best available option at each step. Here, we choose items with the highest value per unit of weight first.
+Basic concepts required
+- Weight: How heavy an item is.
+- Value: The profit or worth of an item.
+- Capacity: The maximum weight the bag can hold.
+- Ratio: Value divided by weight.
+- Sorting: Arranging items by their ratio in descending order.
+Code explanation
+Code	Meaning
+n = int(input(...))	Accepts the number of items.
+items = []	Creates an empty list to store items.
+w = float(input(...))	Accepts an item's weight.
+v = float(input(...))	Accepts an item's value.
+items.append((v/w, w, v))	Stores the value/weight ratio, weight and value.
+capacity = float(input(...))	Accepts the bag's maximum capacity.
+total = 0	Initialises the total value.
+sorted(items, reverse=True)	Sorts items by ratio from highest to lowest.
+take = min(w, capacity)	Takes the whole item if possible, otherwise the remaining capacity.
+total += r * take	Adds the value of the selected weight.
+capacity -= take	Updates the remaining capacity.
+if capacity <= 0:	Checks whether the bag is full.
+break	Stops the loop when the bag is full.
+print(...)	Displays the maximum value.
+
+Sample output
+Enter number of items: 2
+Enter weight: 12
+Enter value: 52
+Enter weight: 10
+Enter value: 63
+Enter knapsack capacity: 5
+Maximum value = 31.5
+
+
+Complexity
+- Time complexity: O(n log n), because of sorting.
+- Space complexity: (O(n), for storing the items.
+Important points to remember
+1. Fractional Knapsack uses the Greedy algorithm.
+2. Calculate the ratio using value / weight.
+3. Sort ratios in descending order.
+4. min(w, capacity) determines how much weight to take.
+5. Unlike 0/1 Knapsack, fractional knapsack allows taking part of an item.
+Viva question: What is the main difference between Fractional Knapsack and 0/1 Knapsack?
+
+Answer: Fractional Knapsack allows taking a fraction of an item, whereas 0/1 Knapsack allows only taking the whole item or not taking it at all.

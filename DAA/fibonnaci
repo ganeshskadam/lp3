@@ -1,0 +1,100 @@
+Practical 1(A): Fibonacci Series — Non-Recursive
+
+
+def fibonacci(n):
+    a = 0
+    b = 1
+
+    print("Fibonacci Series:")
+    for i in range(n):
+        print(a, end=" ")
+        a, b = b, a + b
+
+n = int(input("Enter the number of terms: "))
+fibonacci(n)
+
+Explanation
+Aim: To print the Fibonacci series using a non-recursive method.
+
+What is Fibonacci series?
+
+A series in which each number is the sum of the previous two numbers.
+
+Example: 0 1 1 2 3 5 8 13
+
+What is non-recursive?
+
+Non-recursive means solving a problem using loops instead of calling the same function again and again.
+Code explanation
+- def fibonacci(n): — Creates a function named fibonacci.
+- a = 0 — Stores the first number.
+- b = 1 — Stores the second number.
+- print("Fibonacci Series:") — Prints the heading.
+- for i in range(n): — Repeats the loop n times.
+- print(a, end=" ") — Prints the current number with a space.
+- a, b = b, a + b — Updates the numbers to generate the next Fibonacci term.
+- n = int(input(...)) — Takes the number of terms from the user.
+- fibonacci(n) — Calls the function.
+Sample output
+Enter the number of terms: 7
+Fibonacci Series:
+0 1 1 2 3 5 8
+
+
+Complexity
+- Time complexity: O(n)
+- Space complexity: O(1)
+Important points to remember
+- for loop is used to repeat the process.
+- a, b = b, a + b generates the next terms.
+- Non-recursive means no repeated function calls to itself.
+
+
+*********************************************************************************************************************************************
+
+
+Practical 1(B): Fibonacci Series — Recursive
+
+
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+n = int(input("Enter the number of terms: "))
+print("Fibonacci Series:")
+
+for i in range(n):
+    print(fibonacci(i), end=" ")
+    
+
+Explanation
+Aim: To print the Fibonacci series using a recursive method.
+
+What is recursion?
+
+Recursion means a function calls itself to solve a problem.
+
+Code explanation
+- def fibonacci(n): — Defines a function named fibonacci.
+- if n <= 1: — Checks whether n is 0 or 1.
+- return n — Returns 0 or 1 as the starting Fibonacci numbers. This is called the base case.
+- return fibonacci(n - 1) + fibonacci(n - 2) — Calls the same function twice and adds the results to calculate the next Fibonacci number.
+- n = int(input(...)) — Takes the number of terms from the user.
+- for i in range(n): — Repeats the loop n times.
+- print(fibonacci(i), end=" ") — Calculates and prints each Fibonacci term.
+Sample output
+Enter the number of terms: 7
+Fibonacci Series:
+0 1 1 2 3 5 8
+
+
+Complexity
+- Time complexity: O(2^n), approximately.
+- Space complexity: O(n) for the recursion stack.
+Important points to remember
+- Recursive means a function calls itself.
+- The if n <= 1 condition stops recursion for the base cases.
+- The recursive formula adds the two previous Fibonacci terms.
+- Difference from Practical 1(A): Non-recursive uses a loop to calculate terms; recursive uses function calls.
+
